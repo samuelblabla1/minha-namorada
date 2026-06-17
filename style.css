@@ -1,0 +1,667 @@
+/* =====================================================================
+   SURPRESA ROMÂNTICA — style.css
+   Paleta: noite violeta profunda com toques de magenta e dourado-rosado.
+   Tipografia: "Fraunces" (serifada, emocional) para títulos,
+               "Quicksand" (arredondada, leve) para corpo de texto.
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Quicksand:wght@400;500;600;700&display=swap');
+
+:root {
+  /* --- paleta nomeada --- */
+  --night-violet: #1a0b2e;     /* fundo profundo */
+  --deep-purple: #3c1361;      /* fundo secundário / cards */
+  --orchid: #7b2cbf;           /* roxo principal da marca */
+  --bright-orchid: #9d4edd;    /* roxo de destaque / hover */
+  --rose-gold: #e0aaff;        /* texto suave, brilho */
+  --blush: #ffd6e8;            /* detalhes quentes raros */
+
+  --text-main: #f4ecff;
+  --text-soft: #c9b6e8;
+
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+
+  --shadow-glow: 0 0 40px rgba(157, 78, 221, 0.35);
+  --shadow-card: 0 20px 60px rgba(10, 4, 20, 0.55);
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: var(--night-violet);
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  color: var(--text-main);
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Respeita usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ===================== FUNDO ANIMADO ===================== */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 20%, #2a1149 0%, var(--night-violet) 55%, #0d0617 100%);
+}
+
+/* ===================== LAYOUT GERAL ===================== */
+#app {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.97) translateY(12px);
+  transition: opacity 0.6s var(--ease-soft), transform 0.6s var(--ease-soft), visibility 0.6s;
+}
+
+.screen.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1) translateY(0);
+  position: relative;
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  background: linear-gradient(160deg, rgba(60, 19, 97, 0.85), rgba(26, 11, 46, 0.9));
+  border: 1px solid rgba(157, 78, 221, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 44px 36px;
+  text-align: center;
+  box-shadow: var(--shadow-card), var(--shadow-glow);
+  backdrop-filter: blur(6px);
+  animation: card-in 0.7s var(--ease-soft) both;
+}
+
+.card-wide {
+  max-width: 560px;
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ===================== TIPOGRAFIA ===================== */
+.eyebrow {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 10px;
+}
+
+.title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 2.2rem;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  color: var(--text-main);
+}
+
+.small-title {
+  font-size: 1.6rem;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--text-soft);
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+
+.subtitle.small {
+  font-size: 0.95rem;
+}
+
+.heart {
+  display: inline-block;
+}
+
+/* ===================== TELA 1 — SENHA ===================== */
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.password-input {
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(224, 170, 255, 0.3);
+  background: rgba(13, 6, 23, 0.6);
+  color: var(--text-main);
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.password-input:focus {
+  border-color: var(--bright-orchid);
+  box-shadow: 0 0 0 4px rgba(157, 78, 221, 0.2);
+}
+
+.hint-error {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: var(--blush);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.35s var(--ease-soft), transform 0.35s var(--ease-soft);
+}
+
+.hint-error.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===================== BOTÕES ===================== */
+.btn {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 30px;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease-soft), box-shadow 0.25s var(--ease-soft), background 0.3s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--rose-gold);
+  outline-offset: 3px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--orchid), var(--bright-orchid));
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(123, 44, 191, 0.45);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(157, 78, 221, 0.55);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: rgba(224, 170, 255, 0.12);
+  color: var(--text-main);
+  border: 1px solid rgba(224, 170, 255, 0.35);
+}
+
+.btn-secondary:hover {
+  background: rgba(224, 170, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-soft);
+  border: 1px solid rgba(224, 170, 255, 0.25);
+}
+
+.btn-reveal {
+  margin-top: 26px;
+  opacity: 0;
+  animation: fade-up 0.6s var(--ease-soft) forwards;
+  animation-delay: 2.4s;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.btn-pulse {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 8px 24px rgba(123, 44, 191, 0.45); }
+  50% { box-shadow: 0 8px 36px rgba(157, 78, 221, 0.8); }
+}
+
+/* ===================== TELA 2 — MÚSICA ===================== */
+.dancer {
+  font-size: 3.4rem;
+  margin: 14px 0 6px;
+  animation: dance 1.1s ease-in-out infinite;
+}
+
+@keyframes dance {
+  0%, 100% { transform: rotate(-12deg) translateY(0); }
+  50% { transform: rotate(12deg) translateY(-8px); }
+}
+
+/* ===================== TELA 4 — ESCOLHA BANHO ===================== */
+.choice-row {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin: 26px 0 6px;
+  flex-wrap: wrap;
+}
+
+.choice-column {
+  flex-direction: column;
+}
+
+.choice-btn {
+  flex: 1;
+  min-width: 110px;
+}
+
+.reveal-text {
+  margin-top: 18px;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--rose-gold);
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.4s var(--ease-soft);
+}
+
+.reveal-text.show {
+  opacity: 1;
+  height: auto;
+  margin-bottom: 6px;
+}
+
+/* O botão de avançar da Tela 4 só aparece depois que a pessoa responde */
+#btn-avancar-banho {
+  display: none;
+}
+
+/* ===================== TELA 5 — CONTADOR ===================== */
+.counter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 18px 0 28px;
+}
+
+.counter-box {
+  background: rgba(123, 44, 191, 0.18);
+  border: 1px solid rgba(157, 78, 221, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 14px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.counter-num {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.counter-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--text-soft);
+  text-transform: uppercase;
+}
+
+@media (max-width: 380px) {
+  .counter-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ===================== TELA 6 — GALERIA ===================== */
+.gallery {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 420px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin: 18px 0 16px;
+  background: rgba(13, 6, 23, 0.5);
+}
+
+.gallery-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.7s var(--ease-soft), transform 0.7s var(--ease-soft);
+  pointer-events: none;
+}
+
+.gallery-item.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex: 1;
+}
+
+.gallery-item figcaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 14px;
+  background: linear-gradient(to top, rgba(13, 6, 23, 0.9), transparent);
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.gallery-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(224, 170, 255, 0.3);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.gallery-dots span.active {
+  background: var(--bright-orchid);
+  transform: scale(1.3);
+}
+
+/* ===================== TELA 7 — BOTÃO FUGITIVO ===================== */
+#screen-7 .card {
+  position: relative;
+  min-height: 420px;
+}
+
+.choice-btn-final {
+  width: 100%;
+}
+
+#btn-nao {
+  position: relative;
+  transition: transform 0.18s ease-out, left 0.18s ease-out, top 0.18s ease-out;
+}
+
+#btn-nao.fleeing {
+  position: fixed;
+}
+
+.taunt-text {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: var(--blush);
+  min-height: 1.2em;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.taunt-text.show {
+  opacity: 1;
+}
+
+/* ===================== VÍDEOS ===================== */
+.video-player {
+  width: 100%;
+  border-radius: var(--radius-md);
+  margin: 18px 0 26px;
+  background: #000;
+  box-shadow: 0 12px 36px rgba(10, 4, 20, 0.6);
+  max-height: 480px;
+}
+
+/* ===================== TELA 10 — CARTA ===================== */
+.card-letter {
+  max-width: 520px;
+  text-align: left;
+}
+
+.card-letter .title {
+  text-align: center;
+}
+
+.letter-body {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-main);
+  white-space: pre-wrap;
+  background: rgba(13, 6, 23, 0.4);
+  border: 1px solid rgba(157, 78, 221, 0.25);
+  border-radius: var(--radius-md);
+  padding: 26px 22px;
+  margin: 18px 0 28px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.card-letter .btn {
+  display: block;
+  margin: 0 auto;
+}
+
+/* ===================== TELA 12 — SURPRESA ===================== */
+.card-surprise {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 56px 36px;
+}
+
+.surprise-line {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s var(--ease-soft), transform 0.8s var(--ease-soft);
+}
+
+.surprise-line.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.surprise-signature {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 2.1rem;
+  color: var(--rose-gold);
+  text-shadow: 0 0 22px rgba(224, 170, 255, 0.5);
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+  transition: opacity 1s var(--ease-soft), transform 1s var(--ease-soft);
+}
+
+.surprise-signature.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.from-to {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  margin-top: 10px;
+  opacity: 0;
+  transition: opacity 1s var(--ease-soft);
+}
+
+.from-to.show {
+  opacity: 1;
+}
+
+/* Corações de chuva (criados via JS) */
+.falling-heart {
+  position: fixed;
+  top: -10%;
+  font-size: 1.4rem;
+  pointer-events: none;
+  z-index: 5;
+  animation: fall linear forwards;
+  opacity: 0.9;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(115vh) rotate(360deg);
+    opacity: 0.2;
+  }
+}
+
+/* ===================== TELA 13 — FINAL SECRETO ===================== */
+#screen-13 {
+  background: #050208;
+}
+
+.final-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  padding: 24px;
+  width: 100%;
+}
+
+.final-photo {
+  width: 100%;
+  max-width: 380px;
+  max-height: 55vh;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 60px rgba(157, 78, 221, 0.4);
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 1.4s var(--ease-soft), transform 1.4s var(--ease-soft);
+}
+
+.final-photo.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.final-text {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-soft);
+}
+
+.final-text.show {
+  opacity: 1;
+}
+
+.final-heart {
+  font-size: 2rem;
+  opacity: 0;
+  transition: opacity 1s var(--ease-soft);
+}
+
+.final-heart.show {
+  opacity: 1;
+  animation: heartbeat 1.4s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+}
+
+.final-text-last {
+  color: var(--rose-gold);
+  font-style: italic;
+}
+
+/* ===================== RESPONSIVO ===================== */
+@media (max-width: 480px) {
+  .card {
+    padding: 34px 24px;
+  }
+  .title {
+    font-size: 1.8rem;
+  }
+  .small-title {
+    font-size: 1.35rem;
+  }
+}
+
+/* Chromebooks / telas largas: evita que o card fique solto demais */
+@media (min-width: 1024px) {
+  .card {
+    max-width: 480px;
+  }
+  .card-wide {
+    max-width: 620px;
+  }
+}
