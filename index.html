@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>my moh 💜</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Fundo animado: partículas/corações flutuantes, fica fixo atrás de todas as telas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Áudio da trilha sonora, controlado via JS -->
+  <audio id="trilha" src="musica.mp3" preload="auto"></audio>
+
+  <main id="app">
+
+    <!-- ===================== TELA 1 — SENHA ===================== -->
+    <section class="screen active" id="screen-1" data-screen="1">
+      <div class="card">
+        <p class="eyebrow">para você</p>
+        <h1 class="title">Oi <span class="heart">💜</span></h1>
+        <p class="subtitle">Antes de continuar, preciso ter certeza que é você...</p>
+
+        <form id="form-senha" class="password-form" autocomplete="off">
+          <input
+            type="password"
+            id="input-senha"
+            class="password-input"
+            placeholder="• • • • • • • •"
+            inputmode="numeric"
+            autocomplete="off"
+          />
+          <button type="submit" class="btn btn-primary">Entrar 😌</button>
+        </form>
+
+        <p class="hint-error" id="hint-erro">tenta aí nossa data de namoro akkakkaka 😏</p>
+      </div>
+    </section>
+
+    <!-- ===================== TELA 2 — MÚSICA ===================== -->
+    <section class="screen" id="screen-2" data-screen="2">
+      <div class="card">
+        <h1 class="title">ACERTOU <span class="heart">😌💜</span></h1>
+        <p class="subtitle">CHORAAA NO MEU COLO BB</p>
+        <div class="dancer" aria-hidden="true">💃</div>
+        <button class="btn btn-primary btn-reveal" id="btn-continuar-musica">Continuar 😌</button>
+      </div>
+    </section>
+
+    <!-- ===================== TELA 3 — INTRODUÇÃO ===================== -->
+    <section class="screen" id="screen-3" data-screen="3">
+      <div class="card">
+        <h1 class="title">Agr sim, my moh <span class="heart">💜</span></h1>
+        <p class="subtitle small">responde essa perguta rapidão akkakaka</p>
+        <button class="btn btn-primary" data-next="4">Começar ❤️</button>
+      </div>
+    </section>
+
+    <!-- ===================== TELA 4 — PERGUNTA BANHO ===================== -->
+    <section class="screen" id="screen-4" data-screen="4">
+      <div class="card">
+        <h1 class="title small-title">Mb, tu sabe quem tomou banho primeiro hj? 🚿</h1>
+        <div class="choice-row" id="choice-banho">
+          <button class="btn btn-secondary choice-btn">Eu 😌</button>
+          <button class="btn btn-secondary choice-btn">Você 😌</button>
+        </div>
+        <p class="reveal-text" id="resposta-banho">vou supor que tu marcou que fui eu(tu nem toma banho hehe) ❤️</p>
+        <button class="btn btn-primary btn-reveal" data-next="5" id="btn-avancar-banho">Continuar ❤️</button>
+      </div>
+    </section>
+
+    <!-- ===================== TELA 5 — CONTADOR ===================== -->
+    <section class="screen" id="screen-5" data-screen="5">
+      <div class="card">
+        <p class="subtitle">Estamos juntos há <span class="heart">💜</span></p>
+        <div class="counter-grid">
+          <div class="counter-box">
+            <span class="counter-num" id="count-dias">0</span>
+            <span class="counter-label">dias</span>
+          </div>
+          <div class="counter-box">
+            <span class="counter-num" id="count-horas">0</span>
+            <span class="counter-label">horas</span>
+          </div>
+          <div class="counter-box">
+            <span class="counter-num" id="count-min">0</span>
+            <span class="counter-label">min</span>
+          </div>
+          <div class="counter-box">
+            <span class="counter-num" id="count-seg">0</span>
+            <span class="counter-label">seg</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" data-next="6">Continuar ❤️</button>
+      </div>
+    </section>
+
+    <!-- ===================== TELA 6 — GALERIA ===================== -->
+    <section class="screen" id="screen-6" data-screen="6">
+      <div class="card card-wide">
+        <h1 class="title small-title">Nossos momentos <span class="heart">💜</span></h1>
+        <div class="gallery" id="gallery">
+          <figure class="gallery-item active" data-index="0">
+            <img src="foto1.jpg" alt="Foto 1" />
+            <figcaption>Meu sorriso favorito 💜</figcaption>
+          </figure>
+          <figure class="gallery-item" data-index="1">
+            <img src="foto2.jpg" alt="Foto 2" />
+            <figcaption>A menina que mudou minha vida 💜</figcaption>
+          </figure>
+          <figure class="gallery-item" data-index="2">
+            <img src="foto3.jpg" alt="Foto 3" />
+            <figcaption>Meu lugar favorito ❤️</figcaption>
+          </figure>
+          <figure class="gallery-item" data-index="3">
+            <img src="foto4.jpg" alt="Foto 4" />
+            <figcaption>Nós 💜</figcaption>
+          </figure>
+        </div>
+        <div class="gallery-dots" id="gallery-dots"></div>
+        <button class="btn btn-primary" data-next="7">Continuar ❤️</button>
+      </div>
+    </section>
+
+    <!-- ===================== TELA 7 — VOCÊ ME AMA ===================== -->
+    <section class="screen" id="screen-7" data-screen="7">
+      <div class="card">
+        <h1 class="title small-title">Você me ama msm?? 😌💜</h1>
+        <div class="choice-row choice-column" id="choice-amor">
+          <button class="btn btn-secondary choice-btn-final" data-next="8">Certeza ❤️</button>
+          <button class="btn btn-secondary choice-btn-final" data-next="8">Absolutamente sim, de dedinho 💜</button>
+          <button class="btn btn-ghost" id="btn-nao">Não 😒</button>
+        </div>
+        <p class="taunt-text" id="taunt-text"></p>
+      </div>
+    </section>
+
+    <!-- ===================== TELA 8 — VÍDEO NOSSO ===================== -->
+    <section class="screen" id="screen-8" data-screen="8">
+      <div class="card card-wide">
+        <h1 class="title small-title">ENTÂO;-;... <span class="heart">💜</span></h1>
+        <video class="video-player" id="video-nosso" src="video_nosso.mp4" controls playsinline></video>
+        <button class="btn btn-primary" data-next="9">Continuar ❤️</button>
+      </div>
+    </section>
+
+    <!-- ===================== TELA 9 — VÍDEO DELE ===================== -->
+    <section class="screen" id="screen-9" data-screen="9">
+      <div class="card card-wide">
+        <p class="subtitle">Antes de terminar...</p>
+        <p class="subtitle">Queria te falar uma coisinha <span class="heart">💜</span></p>
+        <video class="video-player" id="video-be" src="video_bê.mp4" controls playsinline></video>
+        <button class="btn btn-primary btn-reveal" id="btn-continuar-video" data-next="10">Continuar 💜</button>
+      </div>
+    </section>
+
+    <!-- ===================== TELA 10 — CARTA ===================== -->
+    <section class="screen" id="screen-10" data-screen="10">
+      <div class="card card-letter">
+        <h1 class="title small-title">💌 Carta de eu <span class="heart">💜</span></h1>
+        <div class="letter-body">
+ESPAÇO DA CARTA
+        </div>
+        <button class="btn btn-primary" data-next="11">Continuar ❤️</button>
+      </div>
+    </section>
+
+    <!-- ===================== TELA 11 — BOTÃO SURPRESA ===================== -->
+    <section class="screen" id="screen-11" data-screen="11">
+      <div class="card">
+        <p class="subtitle">Tem mais uma coisinha 😌</p>
+        <button class="btn btn-primary btn-pulse" data-next="12">Clique aqui 💜</button>
+      </div>
+    </section>
+
+    <!-- ===================== TELA 12 — SURPRESA FINAL ===================== -->
+    <section class="screen" id="screen-12" data-screen="12">
+      <div class="card card-surprise">
+        <p class="surprise-line" id="surprise-line-1">Espero que tenha gostado...</p>
+        <p class="surprise-line" id="surprise-line-2">Eu te amo muito</p>
+        <p class="surprise-signature" id="surprise-signature">𝓂𝒾𝓃𝒽𝒶 𝓅𝓇𝒾𝓃𝒸𝑒𝓈𝒶 💜</p>
+        <div class="from-to" id="surprise-fromto">
+          <span>De: bê 💜</span>
+          <span>Para: my moh 💜</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TELA 13 — FINAL SECRETO ===================== -->
+    <section class="screen" id="screen-13" data-screen="13">
+      <div class="final-stage">
+        <img src="foto_especial.jpg" alt="Foto especial" class="final-photo" id="final-photo" />
+        <p class="final-text" id="final-text-1">Minha pessoa favorita 💜</p>
+        <p class="final-heart" id="final-heart">❤️</p>
+        <p class="final-text final-text-last" id="final-text-2">Para sempre nós 💜</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Botão "Não" foge do clique — fica fora do fluxo normal, posicionado via JS -->
+  <script src="script.js"></script>
+</body>
+</html>
